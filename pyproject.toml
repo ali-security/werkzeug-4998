@@ -1,4 +1,4 @@
-[project]
+  [project]
 name = "Werkzeug"
 description = "The comprehensive WSGI web application library."
 readme = "README.rst"
@@ -102,3 +102,22 @@ module = [
     "xprocess.*",
 ]
 ignore_missing_imports = true
+
+[tool.poetry]
+name = "Quart"
+version = "0.19.7.dev"
+description = "A Python ASGI web microframework with the same API as Flask"
+authors = ["pgjones <philip.graham.jones@googlemail.com>"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Internet :: WWW/HTTP :: WSGI",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]

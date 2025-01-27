@@ -14,14 +14,12 @@ _os_alt_seps: list[str] = list(
     sep for sep in [os.sep, os.path.altsep] if sep is not None and sep != "/"
 )
 
-
 def gen_salt(length: int) -> str:
     """Generate a random string of SALT_CHARS with specified ``length``."""
     if length <= 0:
         raise ValueError("Salt length must be at least 1.")
 
     return "".join(secrets.choice(SALT_CHARS) for _ in range(length))
-
 
 def _hash_internal(method: str, salt: str, password: str) -> tuple[str, str]:
     if method == "plain":
@@ -79,7 +77,6 @@ def _hash_internal(method: str, salt: str, password: str) -> tuple[str, str]:
         )
         return hmac.new(salt, password, method).hexdigest(), method
 
-
 def generate_password_hash(
     password: str, method: str = "pbkdf2", salt_length: int = 16
 ) -> str:
@@ -116,7 +113,6 @@ def generate_password_hash(
     h, actual_method = _hash_internal(method, salt, password)
     return f"{actual_method}${salt}${h}"
 
-
 def check_password_hash(pwhash: str, password: str) -> bool:
     """Securely check that the given stored password hash, previously generated using
     :func:`generate_password_hash`, matches the given password.
@@ -137,7 +133,6 @@ def check_password_hash(pwhash: str, password: str) -> bool:
         return False
 
     return hmac.compare_digest(_hash_internal(method, salt, password)[0], hashval)
-
 
 def safe_join(directory: str, *pathnames: str) -> str | None:
     """Safely join zero or more untrusted path components to a base
@@ -162,6 +157,8 @@ def safe_join(directory: str, *pathnames: str) -> str | None:
         if (
             any(sep in filename for sep in _os_alt_seps)
             or os.path.isabs(filename)
+            # ntpath.isabs doesn't catch this on Python < 3.11
+            or filename.startswith("/")
             or filename == ".."
             or filename.startswith("../")
         ):
